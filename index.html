@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,20 +13,37 @@
   <link rel="icon" type="image/png" href="https://i.ibb.co/V0RnpTcL/Screenshot-2025-10-05-183422.png" />
 
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
-    
+    :root {
+      --gold: #e2c166;
+      --gold-light: #f7e69b;
+      --gold-dark: #b78d2b;
+      --bg-dark: #000;
+      --bg-darker: #0a0a0a;
+      --whatsapp: #25D366;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html, body {
       scroll-behavior: smooth;
+      height: 100%;
     }
 
     body {
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at center, #000 50%, #0a0a0a 100%);
-      color: #e2c166;
+      background: radial-gradient(circle at center, var(--bg-dark) 50%, var(--bg-darker) 100%);
+      color: var(--gold);
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -63,7 +80,40 @@
       100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
     }
 
-   
+    
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(226, 193, 102, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--gold);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    
     .container {
       position: relative;
       z-index: 1;
@@ -77,7 +127,7 @@
       backdrop-filter: blur(12px);
       margin: 60px 0;
       animation: floatUp 1.4s ease forwards;
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
     .container:hover {
@@ -91,14 +141,19 @@
     }
 
     
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+
     .logo {
       width: 130px;
       height: 130px;
       border-radius: 50%;
-      border: 2px solid #e2c166;
+      border: 2px solid var(--gold);
       box-shadow: 0 0 40px rgba(226,193,102,0.45);
       object-fit: cover;
-      margin-bottom: 25px;
       animation: logoPulse 5s ease-in-out infinite;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
@@ -114,11 +169,25 @@
     }
 
     
+    .logo-ring {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      border-top: 1px solid var(--gold);
+      animation: spin 3s linear infinite;
+      opacity: 0.7;
+    }
+
+    
     h1 {
       font-family: 'Cinzel', serif;
       font-size: 2.4em;
       letter-spacing: 2px;
-      background: linear-gradient(90deg, #f7e69b, #b78d2b, #f7e69b);
+      background: linear-gradient(90deg, var(--gold-light), var(--gold-dark), var(--gold-light));
       -webkit-background-clip: text;
       color: transparent;
       background-size: 250%;
@@ -137,6 +206,19 @@
       color: #d1c6a2;
       letter-spacing: 3px;
       margin-bottom: 35px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .subtitle::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
     
@@ -169,7 +251,7 @@
       padding: 15px 22px;
       background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
       border: 1px solid rgba(226,193,102,0.3);
-      color: #e2c166;
+      color: var(--gold);
       text-decoration: none;
       border-radius: 12px;
       font-size: 1.1em;
@@ -192,7 +274,7 @@
     }
 
     .links a:hover {
-      background: linear-gradient(90deg, #e2c166, #f9e8a0);
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
       color: #000;
       box-shadow: 0 10px 25px rgba(226,193,102,0.3);
       transform: translateY(-3px);
@@ -210,11 +292,75 @@
     }
 
     
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 15px 22px;
+      background: linear-gradient(145deg, rgba(37, 211, 102, 0.1), rgba(37, 211, 102, 0.05));
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 1.1em;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .whatsapp-btn::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, rgba(37, 211, 102, 0.3), rgba(255,255,255,0));
+      transition: all 0.6s ease;
+    }
+
+    .whatsapp-btn:hover::before {
+      left: 100%;
+    }
+
+    .whatsapp-btn:hover {
+      background: linear-gradient(90deg, var(--whatsapp), #5df78d);
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .whatsapp-btn img {
+      width: 24px;
+      height: 24px;
+      transition: filter 0.3s ease;
+    }
+
+    
+    .whatsapp-section {
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+
+    .whatsapp-section h3 {
+      font-size: 1em;
+      color: #d1c6a2;
+      margin-bottom: 12px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .whatsapp-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    
     ::-webkit-scrollbar {
       width: 8px;
     }
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #b78d2b, #e2c166);
+      background: linear-gradient(180deg, var(--gold-dark), var(--gold));
       border-radius: 10px;
     }
     ::-webkit-scrollbar-track {
@@ -222,35 +368,91 @@
     }
 
    
+    .footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(226,193,102,0.2);
+      font-size: 0.9em;
+      color: rgba(209, 198, 162, 0.7);
+    }
+
+    
     @media (max-width: 480px) {
       h1 { font-size: 2em; }
       .container { width: 88%; padding: 28px; margin: 40px 0; }
       .links a { font-size: 1em; padding: 13px 18px; }
+      .whatsapp-btn { font-size: 1em; padding: 13px 18px; }
       .logo { width: 110px; height: 110px; }
     }
   </style>
 </head>
 
 <body>
+  
+  <div class="loading" id="loading">
+    <div class="loader"></div>
+  </div>
+
+  
   <div class="container">
-    <img src="https://i.ibb.co/V0RnpTcL/Screenshot-2025-10-05-183422.png" class="logo" alt="Karas Fashion Logo">
+    <div class="logo-container">
+      <img src="https://i.ibb.co/V0RnpTcL/Screenshot-2025-10-05-183422.png" class="logo" alt="Karas Fashion Logo">
+      <div class="logo-ring"></div>
+    </div>
+    
     <h1>KARAS FASHION</h1>
     <p class="subtitle">CLOTHING BRAND</p>
 
     <ul class="links">
-      <li style="--i:1"><a href="https://www.instagram.com/karas.fashion.eg" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png"/>Instagram</a></li>
-      <li style="--i:2"><a href="https://www.facebook.com/karas.fashion.eg" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png"/>Facebook</a></li>
-      <li style="--i:3"><a href="https://www.tiktok.com/@karas.fashion.eg" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/tiktok.png"/>TikTok</a></li>
-      <li style="--i:4"><a href="mailto:info@karasfashion.com"><img src="https://img.icons8.com/ios-filled/50/ffffff/new-post.png"/>info@karasfashion.com</a></li>
-      <li style="--i:5"><a href="https://maps.app.goo.gl/3M3ya2Nvb6psA3iy9?g_st=ii" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/marker.png"/>Store Location</a></li>
-      <li style="--i:6"><a href="tel:+201022777725"><img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"/>010 2277 7725</a></li>
-      <li style="--i:7"><a href="tel:+201100088813"><img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"/>011 0008 8813</a></li>
-      <li style="--i:8"><a href="tel:+2023334459191"><img src="https://img.icons8.com/ios-filled/50/ffffff/fax.png"/>Fax: 2 33 3445 9191</a></li>
-      <li style="--i:9"><a href="https://karasfashion.com" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/domain.png"/>Main Website</a></li>
+      <li style="--i:1"><a href="https://www.instagram.com/karas.fashion.eg" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram"/>Instagram</a></li>
+      <li style="--i:2"><a href="https://www.facebook.com/karas.fashion.eg" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook"/>Facebook</a></li>
+      <li style="--i:3"><a href="https://www.tiktok.com/@karas.fashion.eg" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/tiktok.png" alt="TikTok"/>TikTok</a></li>
+      <li style="--i:4"><a href="mailto:info@karasfashion.com"><img src="https://img.icons8.com/ios-filled/50/ffffff/new-post.png" alt="Email"/>info@karasfashion.com</a></li>
+      <li style="--i:5"><a href="https://maps.app.goo.gl/3M3ya2Nvb6psA3iy9?g_st=ii" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/marker.png" alt="Location"/>Store Location</a></li>
+      
+      <li style="--i:6">
+        <div class="whatsapp-section">
+          <div class="whatsapp-buttons">
+            <a href="https://wa.me/201022777725" class="whatsapp-btn" target="_blank">
+              <img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png" alt="WhatsApp"/>
+              010 2277 7725
+            </a>
+            <a href="https://wa.me/201100088813" class="whatsapp-btn" target="_blank">
+              <img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png" alt="WhatsApp"/>
+              011 0008 8813
+            </a>
+          </div>
+        </div>
+      </li>
+      
+      <li style="--i:7"><a href="tel:+201022777725"><img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="Phone"/>010 2277 7725</a></li>
+      <li style="--i:8"><a href="tel:+201100088813"><img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="Phone"/>011 0008 8813</a></li>
+      <li style="--i:9"><a href="tel:+2023334459191"><img src="https://img.icons8.com/ios-filled/50/ffffff/fax.png" alt="Fax"/>Fax: 2 33 3445 9191</a></li>
+      <li style="--i:10"><a href="https://karasfashion.com" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/domain.png" alt="Website"/>Main Website</a></li>
     </ul>
+
+    <div class="footer">
+      Luxury Fashion Since 0000
+    </div>
   </div>
+
+  <script>
+    
+    window.addEventListener('load', function() {
+      const loading = document.getElementById('loading');
+      setTimeout(() => {
+        loading.classList.add('hidden');
+      }, 500);
+    });
+
+    
+    document.querySelector('.container').addEventListener('click', function(e) {
+      if (e.target === this) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  </script>
 </body>
 </html>
-
 
 
